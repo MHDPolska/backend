@@ -1,4 +1,8 @@
 class IpoolClient
+  include ActionController::UrlFor
+
+  attr_reader :api
+
   def initialize
     @base_path = '/api/v3'
 
@@ -6,23 +10,35 @@ class IpoolClient
     @api = OAuth::AccessToken.new(@consumer)
   end
 
+  def get_json(path, params = {})
+    JSON.parse get(path, params)
+  end
+
   def get(path, params = {})
-    params.reverse_merge! language: :de, sources: %q{-"fingerpost"}
-    JSON.parse @api.get("#{@base_path}#{path}?#{params.to_query}").body
+    params.reverse_merge! language: :de, sources: %q{-"fingerpost"} unless params.nil?
+    @api.get("#{@base_path}#{path}?#{params.to_query}").body
   end
 
   ####
 
   def topics
-    topics = get('/topics/trending', entityTypes: %q["events"])
+    topics = get_json('/topics/trending', entityTypes: %q["events"])
 
     topics.map do |topic|
       topic_name = topic['name']
 
-      article = get('/search', events: %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
-      picture_url = article['contentReferences'].find { |ref| ref['type'] == 'PICTURE' }.try(:[], 'externalUrl')
+      article = get_json('/search', events: %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
 
-      Topic.new(topic_name, article['identifier'], article['title'].strip, picture_url)
+      Topic.new(topic_name, Article.from(article))
     end
+  end
+
+  def topic(id)
+    article = get_json("/search/#{id}")
+    Topic.new(article['entities']['events'].first['lemma'], Article.from(article))
+  end
+
+  def picture(id)
+    get("/object/#{id}", nil)
   end
 end

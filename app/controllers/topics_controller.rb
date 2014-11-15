@@ -5,6 +5,10 @@ class TopicsController < ApplicationController
     @topics = @client.topics
   end
 
+  def show
+    @topic = @client.topic(params[:id])
+  end
+
   private
 
   def setup_client
