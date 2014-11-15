@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   before_filter :setup_cache
 
   def index
-    @topics = @client.topics
+    @topics = @client.topics.uniq { |topic| topic.name }
   end
 
   def show
