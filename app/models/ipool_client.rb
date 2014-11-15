@@ -35,7 +35,7 @@ class IpoolClient
 
   def topic(id)
     article = get_json("/search/#{id}")
-    Topic.new(article['entities']['events'].first['lemma'], Article.from(article))
+    Topic.new(article['entities']['events'].first['lemma'], 'events', Article.from(article))
   end
 
   def picture(id)
