@@ -28,7 +28,7 @@ class IpoolClient
 
       article = get_json('/search', entity_type => %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
 
-      Topic.new(topic_name, Article.from(article))
+      Topic.new(topic_name, entity_type, Article.from(article))
     end
   end
 
