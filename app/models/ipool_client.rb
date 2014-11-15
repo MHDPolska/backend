@@ -1,6 +1,4 @@
 class IpoolClient
-  include ActionController::UrlFor
-
   attr_reader :api
 
   def initialize
@@ -22,12 +20,13 @@ class IpoolClient
   ####
 
   def topics
-    topics = get_json('/topics/trending', entityTypes: %q["events"])
+    topics = get_json('/topics/trending', entityTypes: %q["events","products"])
 
     topics.map do |topic|
       topic_name = topic['name']
+      entity_type = topic['entityType']
 
-      article = get_json('/search', events: %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
+      article = get_json('/search', entity_type => %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
 
       Topic.new(topic_name, Article.from(article))
     end

@@ -1,1 +1,1 @@
-Topic = Struct.new(:name, :article)
+Topic = Struct.new(:name, :type, :article)
