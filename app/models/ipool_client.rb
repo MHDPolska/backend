@@ -20,7 +20,8 @@ class IpoolClient
   ####
 
   def topics
-    topics = get_json('/topics/trending', entityTypes: %q["events","products"])
+    topics = get_json('/topics/trending', entityTypes: %q["events"])
+    topics += get_json('/topics/hot', entityTypes: %q["events"])
 
     topics.map do |topic|
       topic_name = topic['name']

@@ -4,7 +4,11 @@ class ArticleBuilder
   end
 
   def picture_references
-    @references ||= @hash['contentReferences'].select { |ref| ref['type'] == 'PICTURE' }
+    if @hash.include? 'contentReferences'
+      @hash['contentReferences'].select { |ref| ref['type'] == 'PICTURE' }
+    else
+      []
+    end
   end
 
   def picture_url(reference)
@@ -16,7 +20,7 @@ class ArticleBuilder
   end
 
   def summary
-    @hash['leadText'] || @hash['captions'].first.strip
+    @hash['leadText'] || @hash['leadtext'] || @hash['captions'].first.strip
   end
 
   def url
