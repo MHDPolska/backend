@@ -16,7 +16,7 @@ class IpoolClient
 
   def get(path, params = {})
     params.reverse_merge! language: :de, sources: %q{-"fingerpost"} unless params.nil?
-    @api.get("#{@base_path}#{path}?#{params.to_query}").body
+    @api.get("#{@base_path}#{path}?#{params.try(:to_query)}").body
   end
 
   ####
