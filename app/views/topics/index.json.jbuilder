@@ -1,10 +1,7 @@
 json.topics @topics do |topic|
+  json.id topic.article_id
   json.name topic.name
   json.pictureUrl topic.picture_url
-
-  json.article do
-    json.id topic.article_id
-    json.title topic.article_title
-  end
+  json.articleTitle topic.article_title
 end
 
