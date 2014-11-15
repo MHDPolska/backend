@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :setup_client
+  before_filter :setup_cache
 
   def index
     @topics = @client.topics
@@ -20,5 +21,9 @@ class TopicsController < ApplicationController
 
   def setup_client
     @client ||= IpoolClient.new
+  end
+
+  def setup_cache
+    expires_in 3.minutes, public: true
   end
 end
