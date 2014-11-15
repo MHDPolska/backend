@@ -29,7 +29,10 @@ gem 'spring',        group: :development
 gem 'oauth'
 gem 'rails_12factor', group: :production
 
-gem 'dotenv-rails', group: :development
+group :development do
+  gem 'dotenv-rails'  
+  gem 'awesome_print', require: false
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

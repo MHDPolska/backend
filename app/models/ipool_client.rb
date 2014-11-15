@@ -7,15 +7,22 @@ class IpoolClient
   end
 
   def get(path, params = {})
+    params.reverse_merge! language: :de, sources: %q{-"fingerpost"}
     JSON.parse @api.get("#{@base_path}#{path}?#{params.to_query}").body
   end
 
   ####
 
-  def events(options = {})
-    options.reverse_merge! language: :en
+  def topics
+    topics = get('/topics/trending', entityTypes: %q["events"])
 
-    response = get('/topics/hot', options.merge('entityTypes' => %q{"events"}))
-    response.map { |hash| Event.from(hash) }
+    topics.map do |topic|
+      topic_name = topic['name']
+
+      article = get('/search', events: %Q["#{topic_name}"], sortBy: :dateCreated, order: :desc, types: %q["article"], limit: 1)['documents'].first
+      picture_url = article['contentReferences'].find { |ref| ref['type'] == 'PICTURE' }.try(:[], 'externalUrl')
+
+      Topic.new(topic_name, article['identifier'], article['title'].strip, picture_url)
+    end
   end
 end

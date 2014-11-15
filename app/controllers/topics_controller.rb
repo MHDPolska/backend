@@ -1,8 +1,8 @@
-class EventsController < ApplicationController
+class TopicsController < ApplicationController
   before_filter :setup_client
 
   def index
-    @events = @client.events
+    @topics = @client.topics
   end
 
   private
