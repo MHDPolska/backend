@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :topics, only: [:index, :show]
+  resources :topics, only: [:index, :show] do
+    member do
+      get 'social'
+    end
+  end
   resources :pictures, only: [:show]
 
   # The priority is based upon order of creation: first created -> highest priority.

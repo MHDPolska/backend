@@ -28,9 +28,11 @@ gem 'spring',        group: :development
 
 gem 'oauth'
 gem 'rails_12factor', group: :production
+gem 'twitter'
 
 group :development do
-  gem 'dotenv-rails'  
+  gem 'dotenv-rails' 
+  gem 'pry-rails' 
   gem 'awesome_print', require: false
 end
 
