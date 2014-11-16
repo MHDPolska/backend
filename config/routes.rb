@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :topics, only: [:index, :show] do
     member do
       get 'social'
-      put 'upload'
+      post 'upload'
     end
   end
   resources :pictures, only: [:show]
