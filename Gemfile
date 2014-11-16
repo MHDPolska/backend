@@ -27,7 +27,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'oauth'
-gem 'rails_12factor', group: :production
 gem 'twitter'
 gem 'google-api-client', require: 'google/api_client'
 
@@ -35,6 +34,11 @@ group :development do
   gem 'dotenv-rails' 
   gem 'pry-rails' 
   gem 'awesome_print', require: false
+end
+
+group :production do
+  gem 'rails_12factor'
+  gem 'dalli'
 end
 
 # Use ActiveModel has_secure_password
