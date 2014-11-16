@@ -11,6 +11,6 @@ class TwitterClient
   def tweets_for(topic)
     query = "#{topic.name} youtube"
 
-    @api.search(query, lang: :de, count: 5).attrs[:statuses].map { |tweet| Tweet.from(tweet) }
+    @api.search(query, lang: :de).attrs[:statuses].map { |tweet| Tweet.from(tweet) }
   end
 end
