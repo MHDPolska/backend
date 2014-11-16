@@ -17,6 +17,11 @@ class TopicsController < ApplicationController
     @tweets = twitter.tweets_for(topic).reject { |tweet| tweet.video_id.nil? }.uniq { |tweet| tweet.video_id }[0...5]
   end
 
+  def upload
+    youtube = YoutubeClient.new
+    render json: youtube.upload(params[:name], params[:video].path)
+  end
+
   private
 
   def setup_client
