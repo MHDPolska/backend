@@ -6,5 +6,5 @@ json.array! @tweets do |tweet|
   end
   json.timestamp tweet.timestamp
   json.content   tweet.content
-  json.videoUrl  tweet.video_url
+  json.videoId   tweet.video_id
 end

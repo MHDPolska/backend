@@ -27,7 +27,11 @@ class TweetBuilder
     @hash[:entities][:urls].find { |url| url[:expanded_url].match(%r{//(www\.)?(youtu\.be|youtube.com)}) }.try(:[], :expanded_url)
   end
 
+  def video_id
+    video_url.match(%r{(?:v=|be/)(\w+)})[1] if video_url
+  end
+
   def build
-    Tweet.new(author, handle, timestamp, content, avatar_url, video_url)
+    Tweet.new(author, handle, timestamp, content, avatar_url, video_id)
   end
 end

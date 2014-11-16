@@ -14,7 +14,7 @@ class TopicsController < ApplicationController
     twitter = TwitterClient.new
     topic = @client.topic(params[:id])
 
-    @tweets = twitter.tweets_for(topic).reject { |tweet| tweet.video_url.nil? }
+    @tweets = twitter.tweets_for(topic).reject { |tweet| tweet.video_id.nil? }
   end
 
   private
