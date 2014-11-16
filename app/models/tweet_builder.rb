@@ -28,7 +28,7 @@ class TweetBuilder
   end
 
   def video_id
-    video_url.match(%r{(?:v=|be/)(\w+)})[1] if video_url
+    video_url.match(%r{(?:v=|be/)([\w\-]+)})[1] if video_url
   end
 
   def build
