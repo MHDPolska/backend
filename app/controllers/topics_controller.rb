@@ -21,7 +21,7 @@ class TopicsController < ApplicationController
 
     @tweets = Rails.cache.fetch(['social', params[:id]]) do 
       twitter = TwitterClient.new
-      twitter.tweets_for(topic).reject { |tweet| tweet.video_id.nil? }.uniq { |tweet| tweet.video_id }[0...5]
+      twitter.tweets_for(Topic.new(topic['name'])).reject { |tweet| tweet.video_id.nil? }.uniq { |tweet| tweet.video_id }[0...5]
     end
   end
 
